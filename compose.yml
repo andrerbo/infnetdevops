@@ -1,0 +1,16 @@
+services:
+  devops-app:
+    image: spring-docker
+    build:
+      dockerfile: dockerfile
+    ports:
+      - "8080:8080"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - /C/java/infnet/devops/infnet/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
