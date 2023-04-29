@@ -3,7 +3,6 @@ package edu.br.infnet.service;
 import edu.br.infnet.infrastructure.UserMapper;
 import edu.br.infnet.infrastructure.UserMapperRepository;
 import edu.br.infnet.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

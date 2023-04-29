@@ -6,6 +6,11 @@ services:
     ports:
       - "8080:8080"
 
+#  frontend-app:
+#    image: spring-frontend-docker
+#    ports:
+#      - "8081:8081"
+
   prometheus:
     image: prom/prometheus
     volumes:
@@ -27,3 +32,29 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SERVER_DOMAIN=localhost
+
+#  elasticsearch:
+#    image: elasticsearch:7.17.7
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:9200/_cat/health"]
+#      interval: 20s
+#      timeout: 10s
+#      retries: 5
+#      start_period: 5s
+#    environment:
+#      - discovery.type=single-node
+#    restart: always
+#  zipkin:
+#    image: openzipkin/zipkin-slim
+#    ports:
+#      - 9411:9411
+#    environment:
+#      - STORAGE_TYPE=elasticsearch
+#      - ES_HOSTS=http://elasticsearch:9200
+#      - JAVA_OPTS=-Xms1G -Xmx1G -XX:+ExitOnOutOfMemoryError
+#    depends_on:
+#      - elasticsearch
+#    restart: always
