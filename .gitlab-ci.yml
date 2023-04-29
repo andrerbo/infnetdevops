@@ -1,0 +1,27 @@
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t spring-docker .
+    - ./mvnw clean package
+
+test:
+  stage: test
+  script:
+    - ./mvnw test
+
+deploy:
+  stage: deploy
+  script:
+    - docker-compose up -d
+    - apt-get update -y && apt-get install -y openssh-client
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+    - ssh -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /path/to/app && docker-compose up -d"
+  only:
+    - master
